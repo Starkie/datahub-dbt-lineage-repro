@@ -1,0 +1,31 @@
+pipeline_name: "lineage-repro-01-bigquery"
+
+source:
+    type: bigquery
+    config:
+      env: dev
+      convert_urns_to_lowercase: true # The URNs in DataHub are case sensitive!
+      include_table_lineage: true
+      include_usage_statistics: true
+      include_tables: true
+      include_views: true
+      profiling:
+          enabled: true
+          profile_table_level_only: true
+      stateful_ingestion:
+          enabled: true
+      credential:
+          project_id: gcp-project-id
+          private_key: ""
+          private_key_id: ""
+          client_email: ""
+          client_id: ""
+
+      dataset_pattern:
+        allow:
+          - lineage_repro
+
+sink:
+  type: datahub-rest
+  config:
+    server: http://localhost:8080

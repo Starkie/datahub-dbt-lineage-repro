@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: lineage_repro
+    tables:
+      - name: articles_landing
+        description: "Landing table for the raw articles dataset. May include duplicates."
+        columns:
+          - name: id
+            data_type: numeric
+          - name: article_name
+            data_type: string
+          - name: price
+            data_type: numeric

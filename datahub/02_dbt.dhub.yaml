@@ -1,0 +1,28 @@
+---
+pipeline_name: "lineage-repro-02-dbt"
+
+source:
+  type: "dbt"
+  config:
+    env: dev
+
+    # Coordinates
+    # The shell's working directory must be the root of the dbt project
+    manifest_path: "./resources/manifest.json"
+    catalog_path: "./resources/catalog.json"
+    run_results_paths: ["./resources/run_results.json"] # optional for recording dbt test results after running dbt test
+
+    # Options
+    convert_column_urns_to_lowercase: true
+    target_platform: "bigquery"
+    skip_sources_in_lineage: true
+    prefer_sql_parser_lineage: true
+    include_column_lineage: true
+    infer_dbt_schemas: true
+#    entities_enabled: 
+#      sources: "NO"
+
+sink:
+  type: datahub-rest
+  config:
+    server: http://localhost:8080
