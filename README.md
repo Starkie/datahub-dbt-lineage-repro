@@ -1,10 +1,9 @@
 # Datahub DBT Column Level Lineage Repro
 
-This project is a reproduction of the issue where column level lineage is not being generated with Datahub's DBT core integration.
+This project is a reproduction of an issue where column level lineage is not being generated with Datahub's DBT core integration.
 
-It is a BigQuery-based project. 
-
-The errors appears to be related to a deduplication macro, which in BigQuery uses the `ARRAY_AGG` function to 
+The errors appears to be related to the [dbt_utils deduplication macro](https://github.com/dbt-labs/dbt-utils), which in
+BigQuery uses the `ARRAY_AGG` function. We think it might be an edge-case on the bigquery dialect's AST parsing, but we are not sure. 
 
 ## Steps to reproduce
 1. Setup a [dbt profile](https://docs.getdbt.com/docs/core/connect-data-platform/profiles.yml) for this project:
@@ -59,6 +58,7 @@ datahub ingest -c 02_dbt.dhub.yaml
 The entities should appear in DataHub, but the column level lineage is not being generated.
 
 Expected behaviour:
+![Expected DBT Column Level Lineage](./docs/img/01-expected-lineage.png)
 
 Actual behaviour:
-![Actual DBT Column Level Lineage](./docs/02-actual-lineage.png)
+![Actual DBT Column Level Lineage](./docs/img/02-actual-lineage.png)
